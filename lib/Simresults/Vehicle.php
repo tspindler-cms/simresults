@@ -1,6 +1,8 @@
 <?php
 namespace Simresults;
 
+use JsonSerializable;
+
 /**
  * The vehicle class.
  *
@@ -8,7 +10,7 @@ namespace Simresults;
  * @copyright  (c) 2013 Maurice van der Star
  * @license    http://opensource.org/licenses/ISC
  */
-class Vehicle {
+class Vehicle implements JsonSerializable {
 
     /**
      * @var  string  The name of the vehicle
@@ -241,4 +243,22 @@ class Vehicle {
         return $vehicle_name;
     }
 
+    /**
+     * Get the json representation of the object
+     *
+     * @return  string
+     */
+    public function jsonSerialize() {
+        return [
+            'name' => $this->getName(),
+            'type' => $this->getType(),
+            'class' => $this->getClass(),
+            'number' => $this->getNumber(),
+            'ballast' => $this->getBallast(),
+            'restrictor' => $this->getRestrictor(),
+            'skin' => $this->getSkin(),
+            'friendlyName' => $this->getFriendlyName()
+        ];
+    }
+ 
 }

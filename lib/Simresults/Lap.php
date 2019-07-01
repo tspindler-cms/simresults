@@ -1,6 +1,8 @@
 <?php
 namespace Simresults;
 
+use JsonSerializable;
+
 /**
  * The lap class.
  *
@@ -8,7 +10,7 @@ namespace Simresults;
  * @copyright  (c) 2013 Maurice van der Star
  * @license    http://opensource.org/licenses/ISC
  */
-class Lap {
+class Lap implements JsonSerializable {
 
     /**
      * @var  int  The lap number
@@ -796,4 +798,27 @@ class Lap {
     {
         return $this->helper->formatTime($this->time);
     }
+
+    /**
+     * Get the json representation of the object
+     *
+     * @return  string
+     */
+    public function jsonSerialize() {
+        return [
+            'number' => $this->getNumber(),
+            // 'participant' => $this->getParticipant(),
+            'driver' => $this->getDriver()->jsonSerialize(),
+            // 'vehicle' => $this->getVehicle(),
+            'pos' => $this->getPosition(),
+            'time' => $this->getTime(),
+            'sectorTimes' => $this->getSectorTimes(),
+            'aids' => $this->getAids(),
+            'elapsedSeconds' => $this->getElapsedSeconds(),
+            'fuel' => $this->getFuel(),
+            'pitLap' => $this->isPitLap(),
+            'cuts' => $this->getCuts(),
+            'completed' => $this->isCompleted()
+        ];
+    }    
 }

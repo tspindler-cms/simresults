@@ -1,6 +1,8 @@
 <?php
 namespace Simresults;
 
+use JsonSerializable;
+
 /**
  * The driver class.
  *
@@ -8,7 +10,7 @@ namespace Simresults;
  * @copyright  (c) 2013 Maurice van der Star
  * @license    http://opensource.org/licenses/ISC
  */
-class Driver {
+class Driver implements JsonSerializable {
 
     /**
      * @var  string  The name of the driver
@@ -138,4 +140,20 @@ class Driver {
     {
         return $this->driver_id;
     }
+
+
+    /**
+     * Get the json representation of the object
+     *
+     * @return  string
+     */
+    public function jsonSerialize() {
+        return [
+            'name' => $this->getName(),
+            'nameWithAImention'  => $this->getNameWithAiMention(),
+            'human' => $this->isHuman(),
+            'id' => $this->getDriverId()
+        ];
+    }
+
 }

@@ -1,6 +1,8 @@
 <?php
 namespace Simresults;
 
+use JsonSerializable;
+
 /**
  * The participant class.
  *
@@ -8,7 +10,7 @@ namespace Simresults;
  * @copyright  (c) 2013 Maurice van der Star
  * @license    http://opensource.org/licenses/ISC
  */
-class Participant {
+class Participant implements JsonSerializable {
 
     // The finish statusses
     const FINISH_NORMAL = 'finished'; // finished
@@ -985,5 +987,44 @@ class Participant {
         }
 
         return round((100 / $this->getNumberOfLaps()) * $lap_count, 2);
+    }
+
+    /**
+     * Get the json representation of the object
+     *
+     * @return  string
+     */
+    public function jsonSerialize() {
+        $drivers = array();
+        foreach ($this->getDrivers() as $driver) {
+            array_push($drivers, $driver->jsonSerialize());
+        }
+        $vehicles = array();
+        foreach ($this->getVehicles() as $vehicle) {
+            array_push($vehicles, $vehicle->jsonSerialize());
+        }
+        $laps = array();
+        foreach ($this->getLaps() as $lap) {
+            // echo '<pre>'; print_r($lap->jsonSerialize()); echo '</pre>';
+            array_push($laps, $lap->jsonSerialize());
+        }
+        return [
+            'drivers' => $drivers,
+            'team' => $this->getTeam(),
+            'vehicles' => $vehicles,
+            'pos' => $this->getPosition(),
+            'gridPos' => $this->getGridPosition(),
+            'classPos' => $this->getClassPosition(),
+            'laps' => $laps,
+            'pitstops' => $this->getPitstops(),
+            'finishStatus' => $this->getFinishStatus(),
+            'finishStatusComment' => $this->getFinishStatusComment(),
+            'totalTime' => $this->getTotalTime(),
+            'bestLap' => $this->getBestLap()->jsonSerialize(),
+            'numberOfCompletedLaps' => $this->getNumberOfCompletedLaps(),
+            'numberOfLapsLed' => $this->getNumberOfLapsLed(),
+            'posDifference' => $this->getPositionDifference(),
+            'aids' => $this->getAids()
+        ];
     }
 }
