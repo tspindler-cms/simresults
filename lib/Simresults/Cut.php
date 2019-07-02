@@ -1,6 +1,8 @@
 <?php
 namespace Simresults;
 
+use JsonSerializable;
+
 /**
  * The cut class.
  *
@@ -8,7 +10,7 @@ namespace Simresults;
  * @copyright  (c) 2013 Maurice van der Star
  * @license    http://opensource.org/licenses/ISC
  */
-class Cut {
+class Cut implements JsonSerializable {
 
     /**
      * @var  float  The cut time in seconds
@@ -182,6 +184,22 @@ class Cut {
     public function getElapsedSecondsInLap()
     {
         return $this->elapsed_seconds_in_lap;
+    }
+
+    /**
+     * Get the json representation of the object
+     *
+     * @return  array
+     */
+    public function jsonSerialize() {
+        return [
+            'cutTime' => $this->getCutTime(),
+            'timeSkipped' => $this->getTimeSkipped(),
+            'lap' => $this->getLap(),
+            'date' => $this->getDate(),
+            'elapsedSeconds' => $this->getElapsedSeconds(),
+            'elapsedSecondsInLap' => $this->getElapsedSecondsInLap()
+        ];
     }
 
 }

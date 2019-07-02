@@ -1,6 +1,8 @@
 <?php
 namespace Simresults;
 
+use JsonSerializable;
+
 /**
  * The penalty class.
  *
@@ -8,7 +10,7 @@ namespace Simresults;
  * @copyright  (c) 2013 Maurice van der Star
  * @license    http://opensource.org/licenses/ISC
  */
-class Penalty {
+class Penalty implements JsonSerializable {
 
     // The penalty types
     const TYPE_UNKNOWN = NULL;
@@ -192,4 +194,19 @@ class Penalty {
         return $this->served;
     }
 
+    /**
+     * Get the json representation of the object
+     *
+     * @return  array
+     */
+    public function jsonSerialize() {
+        return [
+            'message' => $this->getMessage(),
+            'date' => $this->getDate(),
+            'elapsedSeconds' => $this->getElapsedSeconds(),
+            'type' => $this->getType(),
+            'participant' => $this->getParticipant(),
+            'served' => $this->isServed()
+        ];
+    } 
 }

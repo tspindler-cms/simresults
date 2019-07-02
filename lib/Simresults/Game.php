@@ -1,6 +1,8 @@
 <?php
 namespace Simresults;
 
+use JsonSerializable;
+
 /**
  * The game class.
  *
@@ -8,7 +10,7 @@ namespace Simresults;
  * @copyright  (c) 2013 Maurice van der Star
  * @license    http://opensource.org/licenses/ISC
  */
-class Game {
+class Game implements JsonSerializable {
 
     /**
      * @var  string  The name of the game
@@ -62,6 +64,18 @@ class Game {
     public function getVersion()
     {
         return $this->version;
+    }
+
+    /**
+     * Get the json representation of the object
+     *
+     * @return  array
+     */
+    public function jsonSerialize() {
+        return [
+            'name' => $this->getName(),
+            'version' => $this->getVersion()
+        ];
     }
 
 }

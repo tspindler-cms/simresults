@@ -995,27 +995,14 @@ class Participant implements JsonSerializable {
      * @return  string
      */
     public function jsonSerialize() {
-        $drivers = array();
-        foreach ($this->getDrivers() as $driver) {
-            array_push($drivers, $driver->jsonSerialize());
-        }
-        $vehicles = array();
-        foreach ($this->getVehicles() as $vehicle) {
-            array_push($vehicles, $vehicle->jsonSerialize());
-        }
-        $laps = array();
-        foreach ($this->getLaps() as $lap) {
-            // echo '<pre>'; print_r($lap->jsonSerialize()); echo '</pre>';
-            array_push($laps, $lap->jsonSerialize());
-        }
         return [
-            'drivers' => $drivers,
+            'drivers' => $this->getDrivers(),
             'team' => $this->getTeam(),
-            'vehicles' => $vehicles,
+            'vehicles' => $this->getVehicles(),
             'pos' => $this->getPosition(),
             'gridPos' => $this->getGridPosition(),
             'classPos' => $this->getClassPosition(),
-            'laps' => $laps,
+            'laps' => $this->getLaps(),
             'pitstops' => $this->getPitstops(),
             'finishStatus' => $this->getFinishStatus(),
             'finishStatusComment' => $this->getFinishStatusComment(),

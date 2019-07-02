@@ -802,13 +802,13 @@ class Lap implements JsonSerializable {
     /**
      * Get the json representation of the object
      *
-     * @return  string
+     * @return  array
      */
     public function jsonSerialize() {
         return [
             'number' => $this->getNumber(),
             // 'participant' => $this->getParticipant(),
-            'driver' => $this->getDriver()->jsonSerialize(),
+            'driver' => $this->getDriver(),
             // 'vehicle' => $this->getVehicle(),
             'pos' => $this->getPosition(),
             'time' => $this->getTime(),

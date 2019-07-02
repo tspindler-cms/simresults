@@ -1,6 +1,8 @@
 <?php
 namespace Simresults;
 
+use JsonSerializable;
+
 /**
  * The track class.
  *
@@ -8,7 +10,7 @@ namespace Simresults;
  * @copyright  (c) 2013 Maurice van der Star
  * @license    http://opensource.org/licenses/ISC
  */
-class Track {
+class Track implements JsonSerializable {
 
     /**
      * @var  string  The venue of the track (e.g. Sebring)
@@ -159,6 +161,21 @@ class Track {
         }
 
         return $track_name;
+    }
+
+    /**
+     * Get the json representation of the object
+     *
+     * @return  array
+     */
+    public function jsonSerialize() {
+        return [
+            'venue' => $this->getVenue(),
+            'course' => $this->getCourse(),
+            'event' => $this->getEvent(),
+            'length' => $this->getLength(),
+            'friendlyName' => $this->getFriendlyName()
+        ];
     }
 
 }

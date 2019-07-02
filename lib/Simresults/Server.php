@@ -1,6 +1,8 @@
 <?php
 namespace Simresults;
 
+use JsonSerializable;
+
 /**
  * The server class.
  *
@@ -8,7 +10,7 @@ namespace Simresults;
  * @copyright  (c) 2013 Maurice van der Star
  * @license    http://opensource.org/licenses/ISC
  */
-class Server {
+class Server implements JsonSerializable {
 
     /**
      * @var  string  The name of the server
@@ -89,6 +91,19 @@ class Server {
     public function isDedicated()
     {
         return $this->dedicated;
+    }
+
+    /**
+     * Get the json representation of the object
+     *
+     * @return  array
+     */
+    public function jsonSerialize() {
+        return [
+            'name' => $this->getName(),
+            'motd' => $this->getMotd(),
+            'dedicated' => $this->isDedicated()
+        ];
     }
 
 }

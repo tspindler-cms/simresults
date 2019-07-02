@@ -1,6 +1,8 @@
 <?php
 namespace Simresults;
 
+use JsonSerializable;
+
 /**
  * The chat class.
  *
@@ -8,7 +10,7 @@ namespace Simresults;
  * @copyright  (c) 2013 Maurice van der Star
  * @license    http://opensource.org/licenses/ISC
  */
-class Chat {
+class Chat implements JsonSerializable {
 
     /**
      * @var  string  The message sent
@@ -96,6 +98,19 @@ class Chat {
     public function getElapsedSeconds()
     {
         return $this->elapsed_seconds;
+    }
+
+    /**
+     * Get the json representation of the object
+     *
+     * @return  array
+     */
+    public function jsonSerialize() {
+        return [
+            'message' => $this->getMessage(),
+            'date' => $this->getDate(),
+            'elapsedSeconds' => $this->getElapsedSeconds()
+        ];
     }
 
 }

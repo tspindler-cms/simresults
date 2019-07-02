@@ -1,6 +1,8 @@
 <?php
 namespace Simresults;
 
+use JsonSerializable;
+
 /**
  * The incident class.
  *
@@ -8,7 +10,7 @@ namespace Simresults;
  * @copyright  (c) 2013 Maurice van der Star
  * @license    http://opensource.org/licenses/ISC
  */
-class Incident {
+class Incident implements JsonSerializable {
 
     // The incident types
     const TYPE_UNKNOWN = NULL;
@@ -214,5 +216,24 @@ class Incident {
     {
         return $this->other_participant;
     }
+
+    /**
+     * Get the json representation of the object
+     *
+     * @return  array
+     */
+    public function jsonSerialize() {
+        return [
+            'message' => $this->getMessage(),
+            'date' => $this->getDate(),
+            'elapsedSeconds' => $this->getElapsedSeconds(),
+            'forReview' => $this->isForReview(),
+            'type' => $this->getType(),
+            'participant' => $this->getParticipant(),
+            'otherParticipant' => $this->getOtherParticipant()
+        ];
+    }
+
+
 
 }

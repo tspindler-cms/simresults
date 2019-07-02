@@ -1,6 +1,8 @@
 <?php
 namespace Simresults;
 
+use JsonSerializable;
+
 /**
  * The session class. Main point for results.
  *
@@ -8,7 +10,7 @@ namespace Simresults;
  * @copyright  (c) 2013 Maurice van der Star
  * @license    http://opensource.org/licenses/ISC
  */
-class Session {
+class Session implements JsonSerializable {
 
     // The session types
     const TYPE_PRACTICE = 'practice';
@@ -1111,7 +1113,34 @@ class Session {
         return $sessions;
     }
 
-
-
+    /**
+     * Get the json representation of the object
+     *
+     * @return  array
+     */
+    public function jsonSerialize() {
+        return [
+            'type' => $this->getType(),
+            'name' => $this->getName(),
+            'game' => $this->getGame(),
+            'server' => $this->getServer(),
+            'track' => $this->getTrack(),
+            'participants' => $this->getParticipants(),
+            'date' => $this->getDate(),
+            'maxLaps' => $this->getMaxLaps(),
+            'maxMinutes' => $this->getMaxMinutes(),
+            'chats' => $this->getChats(),
+            'incidents' => $this->getIncidents(),
+            'penalties' => $this->getPenalties(),
+            'mod' => $this->getMod(),
+            'allowedVehicles' => $this->getAllowedVehicles(),
+            'setupFixed' => $this->isSetupFixed(),
+            'otherSettings' => $this->getOtherSettings(),
+            'bestLap' => $this->getBestLap(),
+            'badLaps' => $this->getBadLaps(),
+            'cuts' => $this->getCuts(),
+            'winner' => $this->getWinningParticipant()
+        ];
+    }    
 
 }
